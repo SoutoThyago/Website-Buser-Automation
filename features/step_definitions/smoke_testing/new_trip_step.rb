@@ -30,5 +30,5 @@ E('confirmo a compra') do
 end
 
 Entao('recebo a mensagem de compra finalizada') do
-    sleep 5
+    sleep 10
 end    
