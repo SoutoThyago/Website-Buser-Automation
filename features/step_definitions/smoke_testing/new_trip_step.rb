@@ -1,4 +1,5 @@
 E('realizo a busca com origem {string} destino {string} e data de saída') do |origin,destiny|
+    @firstPage = Capybara.page.driver.browser.window_handles.first
     buserNewTrip.setOrigin origin
     buserNewTrip.selectOrigin
     buserNewTrip.setDestiny destiny
@@ -6,29 +7,39 @@ E('realizo a busca com origem {string} destino {string} e data de saída') do |o
     buserNewTrip.selectDateLeave
     buserNewTrip.clickNextMonth
     buserNewTrip.selectFirstDayOfMonth
-    buserNewTrip.searchTrip
+    buserNewTrip.searchTrip    
 end
 
 E('escolho a primeira opção') do
-    sleep 2
     buserNewTrip.selectNewTrip
 end
 
 E('informo nome {string} CPF {string} RG {string} do passageiro') do |name,cpf,rg|
-    sleep 10
+    buserNewTrip.clickRemovePassenger    
     buserNewTrip.clickNewPassenger
     buserNewTrip.selectAdultPassenger
-    sleep 5
+    buserNewTrip.setNamePassenger name
+    buserNewTrip.setRGPassenger rg
+    buserNewTrip.setCPFPassenger cpf
+    buserNewTrip.clickAddPassenger
 end
 
-E('informo a forma de pagamento cartão numero {string} validade {string} CVV {string} nome {string} CPF {string} CEP {string}') do |number,validity,cvv,name,cpf,cep|
-    sleep 10
+E('informo a forma de pagamento cartão numero {string} validade {string} CVV {string} nome {string} CPF {string} CEP {string} validos') do |number,validity,cvv,name,cpf,cep|    
+    buserPaymentCreditCard.clickPaymentCreditCard    
+    buserPaymentCreditCard.setCreditCardNumber number
+    buserPaymentCreditCard.setCreditCardValidity validity
+    buserPaymentCreditCard.setCreditCardCVV cvv
+    buserPaymentCreditCard.setCreditCardName name
+    buserPaymentCreditCard.setCreditCardCPF cpf
+    buserPaymentCreditCard.setCreditCardCEP cep
+    buserPaymentCreditCard.clickAddCreditCard    
 end
 
-E('confirmo a compra') do
-    sleep 10
+E('confirmo a compra') do    
+    buserNewTrip.clickAcceptTerms        
+    windowsHelper.change_window @firstPage
 end
 
-Entao('recebo a mensagem de compra finalizada') do
-    sleep 15
+Entao('recebo a mensagem de compra finalizada') do        
+    buserNewTrip.clickFinishBuy    
 end    

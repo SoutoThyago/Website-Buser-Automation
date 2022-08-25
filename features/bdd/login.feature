@@ -1,7 +1,7 @@
 #language:pt
 @after
 @url_padrao
-@test_123
+@execute_all
 
 Funcionalidade: Acesso ao site
 
